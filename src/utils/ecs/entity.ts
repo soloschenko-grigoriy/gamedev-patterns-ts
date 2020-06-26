@@ -24,20 +24,39 @@ export abstract class Entity {
   }
 
   public RemoveComponent<C extends IComponent>(constr: constr<C>): void {
-    const components: IComponent[] = []
-    let toRemove: IComponent | null = null
-    for (const component of this._components) {
+    let toRemove: IComponent | undefined
+    let index: number | undefined
+
+    for (let i = 0; i < this._components.length; i++) {
+      const component = this._components[i]
       if (component instanceof constr) {
         toRemove = component
-      } else {
-        components.push(component)
+        index = i
+        break
       }
     }
 
-    if (toRemove) {
+    if (toRemove && index) {
       toRemove.Entity = null
-      this._components = components
+      this._components.splice(index, 1)
     }
+
+
+
+    // const components: IComponent[] = []
+    // let toRemove: IComponent | null = null
+    // for (const component of this._components) {
+    //   if (component instanceof constr) {
+    //     toRemove = component
+    //   } else {
+    //     components.push(component)
+    //   }
+    // }
+
+    // if (toRemove) {
+    //   toRemove.Entity = null
+    //   this._components = components
+    // }
   }
 
   public HasComponent<C extends IComponent>(constr: constr<C>): boolean {
