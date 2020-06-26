@@ -4,12 +4,25 @@ import { IComponent } from './component.h'
 class E extends Entity { }
 class C1 implements IComponent {
   public Entity: E
+
+  public Awake(): void { /* Awake */ }
+
+  public Update(deltaTime: number): void { /* Update */ }
 }
+
 class C2 implements IComponent {
   public Entity: E
+
+  public Awake(): void { /* Awake */ }
+
+  public Update(deltaTime: number): void { /* Update */ }
 }
 class C3 implements IComponent {
   public Entity: E
+
+  public Awake(): void { /* Awake */ }
+
+  public Update(deltaTime: number): void { /* Update */ }
 }
 
 describe('>>> Entity', () => {
@@ -22,7 +35,7 @@ describe('>>> Entity', () => {
     e = new E()
   })
 
-  it('should add, remove, get, and check components', () => {
+  it('should add, remove, get, and check Components', () => {
     expect(e.Components.length).toBe(0)
     e.AddComponent(c1)
     e.AddComponent(c2)
@@ -45,8 +58,49 @@ describe('>>> Entity', () => {
     expect(e.HasComponent(C3)).toBeTruthy()
   })
 
-  it('should throw error if component wasn\'t found', () => {
+  it('should throw error if IComponent wasn\'t found', () => {
     expect(e.HasComponent(C1)).toBeFalsy()
     expect(() => e.GetComponent(C1)).toThrow()
+  })
+
+  it('should awake all Components', () => {
+    const spy1 = jest.spyOn(c1, 'Awake')
+    const spy2 = jest.spyOn(c2, 'Awake')
+    const spy3 = jest.spyOn(c3, 'Awake')
+
+    expect(spy1).not.toBeCalled()
+    expect(spy2).not.toBeCalled()
+    expect(spy3).not.toBeCalled()
+
+    e.AddComponent(c1)
+    e.AddComponent(c2)
+    e.AddComponent(c3)
+
+    e.Awake()
+
+    expect(spy1).toBeCalled()
+    expect(spy2).toBeCalled()
+    expect(spy3).toBeCalled()
+  })
+
+  it('should update all Components', () => {
+    const spy1 = jest.spyOn(c1, 'Update')
+    const spy2 = jest.spyOn(c2, 'Update')
+    const spy3 = jest.spyOn(c3, 'Update')
+
+    expect(spy1).not.toBeCalled()
+    expect(spy2).not.toBeCalled()
+    expect(spy3).not.toBeCalled()
+
+    e.AddComponent(c1)
+    e.AddComponent(c2)
+    e.AddComponent(c3)
+
+    const deltaTime = 12
+    e.Update(deltaTime)
+
+    expect(spy1).toBeCalledWith(deltaTime)
+    expect(spy2).toBeCalledWith(deltaTime)
+    expect(spy3).toBeCalledWith(deltaTime)
   })
 })

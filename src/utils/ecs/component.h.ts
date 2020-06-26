@@ -1,5 +1,6 @@
 import { Entity } from './entity'
+import { IUpdate, IAwake } from '@/utils'
 
-export interface IComponent {
-    Entity: Entity | null
+export interface IComponent extends IAwake, IUpdate {
+  Entity: Entity | null
 }
