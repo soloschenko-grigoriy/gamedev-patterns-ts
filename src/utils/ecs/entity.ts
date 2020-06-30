@@ -1,8 +1,9 @@
 import { IComponent } from './component.h'
+import { IUpdate } from '../update.h'
 
 type constr<T> = { new(...args: unknown[]): T }
 
-export abstract class Entity {
+export abstract class Entity implements IUpdate {
   protected _components: IComponent[] = []
 
   public get Components(): IComponent[] {
@@ -40,23 +41,6 @@ export abstract class Entity {
       toRemove.Entity = null
       this._components.splice(index, 1)
     }
-
-
-
-    // const components: IComponent[] = []
-    // let toRemove: IComponent | null = null
-    // for (const component of this._components) {
-    //   if (component instanceof constr) {
-    //     toRemove = component
-    //   } else {
-    //     components.push(component)
-    //   }
-    // }
-
-    // if (toRemove) {
-    //   toRemove.Entity = null
-    //   this._components = components
-    // }
   }
 
   public HasComponent<C extends IComponent>(constr: constr<C>): boolean {
@@ -67,5 +51,11 @@ export abstract class Entity {
     }
 
     return false
+  }
+
+  public Update(deltaTime: number): void {
+    for(const component of this._components){
+      component.Update(deltaTime)
+    }
   }
 }
