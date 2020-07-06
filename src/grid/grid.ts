@@ -34,8 +34,6 @@ export class Grid extends Entity {
   }
 
   private InitNodes(): void {
-
-
     const dimension = Settings.grid.dimension
     const size = Settings.grid.nodeSize
     const offset = Settings.grid.nodeOffset
