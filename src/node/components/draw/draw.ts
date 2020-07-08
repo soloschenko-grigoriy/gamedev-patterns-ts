@@ -11,7 +11,7 @@ export class NodeDrawComponent implements IComponent {
   }
 
   private get Color(): string {
-    return Settings.grid.default
+    return Settings.grid.color
   }
 
   public Awake(): void {
