@@ -40,23 +40,6 @@ export abstract class Entity {
       toRemove.Entity = null
       this._components.splice(index, 1)
     }
-
-
-
-    // const components: IComponent[] = []
-    // let toRemove: IComponent | null = null
-    // for (const component of this._components) {
-    //   if (component instanceof constr) {
-    //     toRemove = component
-    //   } else {
-    //     components.push(component)
-    //   }
-    // }
-
-    // if (toRemove) {
-    //   toRemove.Entity = null
-    //   this._components = components
-    // }
   }
 
   public HasComponent<C extends IComponent>(constr: constr<C>): boolean {
