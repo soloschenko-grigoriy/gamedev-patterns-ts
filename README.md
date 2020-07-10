@@ -1,7 +1,5 @@
 # Gamedev Patterns and Algorithms in Action with TypeScript
 
-> Applying Principles of Clean Architecture to Enterprise Frontend Application
-
 ## Project setup
 - install Node.js (the version is specified in package.json)
 - if you have nvm installed: 
