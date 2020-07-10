@@ -1,4 +1,5 @@
 # Gamedev Patterns and Algorithms in Action with TypeScript
+> Building a game from scratch with TypeScript
 
 ## Project setup
 - install Node.js (the version is specified in package.json)
