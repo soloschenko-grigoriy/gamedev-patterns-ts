@@ -31,4 +31,4 @@ npm run lint
 - Jest / ESLint
 
 ## Links
-[Complete tutorial](ADD LINK)
+[Complete tutorial](https://medium.com/@gregsolo/gamedev-patterns-and-algorithms-in-action-with-typescript-d29b913858e)
