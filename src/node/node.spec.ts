@@ -1,4 +1,3 @@
-// src/node/node.spec.ts
 import { Node } from './node'
 import { NodeDrawComponent } from './components'
 
