@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.js",
     "test": "jest",
-    "lint": "eslint ./src/**/*.ts"
+    "lint": "eslint ./src/**/*.ts",
+    "test:cc": "jest --clearCache"
   },
   "engines": {
     "node": ">=12.10.0",

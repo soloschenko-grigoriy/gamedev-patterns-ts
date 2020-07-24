@@ -1,6 +1,7 @@
 import { Game } from '@/game'
 import { IComponent } from '@/utils'
 import { Grid } from '@/grid'
+import { Fleet } from '@/fleet'
 
 class C1 implements IComponent {
   public Entity: Game
@@ -81,13 +82,21 @@ describe('>>> Game', () => {
     const spyGridAwake = jest.spyOn(Grid.prototype, 'Awake')
     const spyGridUpdate = jest.spyOn(Grid.prototype, 'Update')
 
+    const spyFleetAwake = jest.spyOn(Fleet.prototype, 'Awake')
+    const spyFleetUpdate = jest.spyOn(Fleet.prototype, 'Update')
+
     expect(spyGridAwake).not.toBeCalled()
     expect(spyGridUpdate).not.toBeCalled()
 
+    expect(spyFleetAwake).not.toBeCalled()
+    expect(spyFleetUpdate).not.toBeCalled()
+
     game.Awake()
     expect(spyGridAwake).toBeCalled()
+    expect(spyFleetAwake).toBeCalled()
 
     game.Update()
     expect(spyGridUpdate).toBeCalled()
+    expect(spyFleetUpdate).toBeCalled()
   })
 })
