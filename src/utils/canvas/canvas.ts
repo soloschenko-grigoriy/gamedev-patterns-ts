@@ -47,5 +47,19 @@ export class Canvas implements IAwake {
   public ClearRect(start: Vector2D, size: Vector2D): void {
     this._ctx.clearRect(start.x, start.y, size.x, size.y)
   }
+
+  public SetStyle(style: Partial<CSSStyleDeclaration>): void {
+    for (const key in style) {
+      if (!Object.hasOwnProperty.call(style, key)) {
+        continue
+      }
+
+      if (!style[key]) {
+        continue
+      }
+
+      this._elm.style[key] = style[key] as string
+    }
+  }
 }
 

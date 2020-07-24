@@ -70,6 +70,15 @@ describe('>>> Canvas', () => {
       expect(fillSpy).toBeCalled()
       expect(canvas.Context.fillStyle).toBe('#ffffff')
     })
+
+    it('should set css style', () => {
+      const zIndex = '1'
+      expect(canvas.Element.style.zIndex).not.toBe<string>(zIndex)
+
+      canvas.SetStyle({ zIndex })
+
+      expect(canvas.Element.style.zIndex).toBe<string>(zIndex)
+    })
   })
 
 })
