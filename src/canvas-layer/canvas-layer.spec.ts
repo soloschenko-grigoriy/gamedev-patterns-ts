@@ -3,7 +3,7 @@ import { Canvas } from '@/utils'
 
 jest.mock('@/utils')
 describe('>>> CanvasLayer', () => {
-  it('should create canvas only once', () => {
+  it('should create Background canvas only once', () => {
     expect(Canvas).not.toBeCalled()
 
     const canvas1 = CanvasLayer.Background
