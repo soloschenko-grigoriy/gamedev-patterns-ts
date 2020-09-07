@@ -25,7 +25,6 @@ describe('>>> Ship', () => {
     expect(spyLocomotionCompAwake).not.toBeCalled()
     expect(spyLocomotionCompUpdate).not.toBeCalled()
 
-
     ship.Awake()
     expect(spyDrawCompAwake).toBeCalled()
     expect(spyLocomotionCompAwake).toBeCalled()
