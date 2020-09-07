@@ -6,5 +6,8 @@ export const Settings = Object.freeze({
     nodeSize: 100,
     nodeOffset: 10,
     color: new Color(245, 245, 245, 1)
+  },
+  ships: {
+    fleetSize: 3
   }
 })
