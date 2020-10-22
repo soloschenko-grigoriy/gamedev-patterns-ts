@@ -1,7 +1,6 @@
-import { Game } from '@/game'
+import { Game, mockGameFactory } from '@/game'
 import { Grid } from '@/grid'
 import { Fleet } from '@/fleet'
-import { mockGameFactory } from './game.mock'
 import { GameInputComponent } from './components'
 
 describe('>>> Game', () => {
