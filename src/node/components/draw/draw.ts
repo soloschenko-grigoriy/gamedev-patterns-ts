@@ -19,7 +19,7 @@ export class NodeDrawComponent implements IComponent {
     CanvasLayer.Background.FillRect(
       this.Entity.Start,
       this.Entity.Size,
-      Settings.grid.color
+      this.Entity.IsActive ? Settings.grid.color.active : Settings.grid.color.regular
     )
   }
 
