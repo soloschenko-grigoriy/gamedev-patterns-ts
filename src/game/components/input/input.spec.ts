@@ -21,7 +21,7 @@ describe('>>> Game Input Component', () => {
     const point = new Vector2D(200, 200)
 
     game.Awake()
-    CanvasLayer.Background.GetLocalPointOf = jest.fn().mockReturnValueOnce(point)
+    CanvasLayer.Background.CalcLocalPointFrom = jest.fn().mockReturnValueOnce(point)
 
     const spy = jest.spyOn(grid.GetComponent(OnclickComponent), 'ClickOn')
 

@@ -90,13 +90,13 @@ describe('>>> Canvas', () => {
       })
 
       it('should return null if point is out of canvas boundaries', () => {
-        expect(canvas.GetLocalPointOf(new Vector2D(0, 0))).toBeNull()
-        expect(canvas.GetLocalPointOf(new Vector2D(541, 400))).toBeNull()
-        expect(canvas.GetLocalPointOf(new Vector2D(400, 541))).toBeNull()
+        expect(canvas.CalcLocalPointFrom(new Vector2D(0, 0))).toBeNull()
+        expect(canvas.CalcLocalPointFrom(new Vector2D(541, 400))).toBeNull()
+        expect(canvas.CalcLocalPointFrom(new Vector2D(400, 541))).toBeNull()
       })
 
       it('should return local point otherwise', () => {
-        expect(canvas.GetLocalPointOf(new Vector2D(200, 300))).toEqual(new Vector2D(180, 280))
+        expect(canvas.CalcLocalPointFrom(new Vector2D(200, 300))).toEqual(new Vector2D(180, 280))
       })
     })
   })

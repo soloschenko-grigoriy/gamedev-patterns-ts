@@ -14,7 +14,7 @@ export class GameInputComponent implements IComponent {
   }
 
   private HandleClick(e: MouseEvent): void {
-    const point = CanvasLayer.Background.GetLocalPointOf(new Vector2D(e.clientX, e.clientY))
+    const point = CanvasLayer.Background.CalcLocalPointFrom(new Vector2D(e.clientX, e.clientY))
     if (!point) {
       return
     }
