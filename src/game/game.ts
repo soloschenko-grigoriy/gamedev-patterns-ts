@@ -1,7 +1,7 @@
-import { ClickComponent, Entity, Vector2D } from '@/utils'
+import { Entity } from '@/utils'
 import { Grid } from '@/grid'
 import { Fleet } from '@/fleet'
-import { CanvasLayer } from '@/canvas-layer'
+import { GameClickComponent } from './components'
 
 export class Game extends Entity {
   private _lastTimestamp = 0
@@ -12,22 +12,21 @@ export class Game extends Entity {
     return this._entities
   }
 
-  constructor(grid: Grid, fleetA: Fleet, fleetB: Fleet){
+  constructor(grid: Grid, fleetA: Fleet, fleetB: Fleet) {
     super()
 
     this._entities.push(grid, fleetA, fleetB)
   }
 
   public Awake(): void {
+    this.AddComponent(new GameClickComponent())
+
     super.Awake()
 
     // awake all children
     for (const entity of this.Entities) {
       entity.Awake()
     }
-
-    // Listen for click event
-    document.body.addEventListener('click', this.HandleClick.bind(this))
 
     // Make sure Update starts after all entities are awaken
     window.requestAnimationFrame(() => {
@@ -55,20 +54,5 @@ export class Game extends Entity {
 
     // Invoke on next frame
     window.requestAnimationFrame(() => this.Update())
-  }
-
-  private HandleClick(e: MouseEvent): void {
-    const point = CanvasLayer.Background.GetLocalPointOf(new Vector2D(e.clientX, e.clientY))
-    if (!point) {
-      return
-    }
-
-    for (const entity of this.Entities) {
-      if (!entity.HasComponent(ClickComponent)) {
-        continue
-      }
-
-      entity.GetComponent(ClickComponent).ClickOn(point)
-    }
   }
 }
