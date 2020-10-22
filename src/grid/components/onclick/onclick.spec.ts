@@ -1,13 +1,13 @@
-import { Grid } from '@/grid/grid'
 import { GridOnclickComponent } from './onclick'
 import { Vector2D } from '@/utils'
+import { mockGridFactory } from '@/grid'
 
 describe('>>> Grid Click Component', () => {
   let comp: GridOnclickComponent
 
   beforeEach(() => {
     comp = new GridOnclickComponent()
-    comp.Entity = new Grid()
+    comp.Entity = mockGridFactory()
     comp.Entity.Awake()
   })
 
