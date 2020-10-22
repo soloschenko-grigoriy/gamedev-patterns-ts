@@ -61,5 +61,29 @@ export class Canvas implements IAwake {
       this._elm.style[key] = style[key] as string
     }
   }
+
+  public GetLocalPointOf(globalPoint: Vector2D): Vector2D | null {
+    const canvasRect = this._elm.getBoundingClientRect()
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+
+    const offset = {
+      top: canvasRect.top + scrollTop,
+      left: canvasRect.left + scrollLeft
+    }
+
+    const x = globalPoint.x - offset.left
+    const y = globalPoint.y - offset.top
+
+    if(x < 0 || y < 0){
+      return null
+    }
+
+    if(x > offset.left + canvasRect.width || y > offset.top + canvasRect.height){
+      return null
+    }
+
+    return new Vector2D(x, y)
+  }
 }
 

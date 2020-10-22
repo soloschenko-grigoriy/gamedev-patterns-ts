@@ -1,6 +1,7 @@
 import { Grid } from './grid'
 import { Node } from '@/node'
 import { Settings } from '@/settings'
+import { GridClickComponent } from './components'
 
 describe('>>> Grid', () => {
   const nodeCount = Settings.grid.dimension * Settings.grid.dimension
@@ -8,6 +9,20 @@ describe('>>> Grid', () => {
 
   beforeEach(() => {
     grid = new Grid()
+  })
+
+  it('should awake and update all Components', () => {
+    const spyDrawCompAwake = jest.spyOn(GridClickComponent.prototype, 'Awake')
+    const spyDrawCompUpdate = jest.spyOn(GridClickComponent.prototype, 'Update')
+
+    expect(spyDrawCompAwake).not.toBeCalled()
+    expect(spyDrawCompUpdate).not.toBeCalled()
+
+    grid.Awake()
+    expect(spyDrawCompAwake).toBeCalled()
+
+    grid.Update(0)
+    expect(spyDrawCompUpdate).toBeCalled()
   })
 
   it('should awake and update all children', () => {

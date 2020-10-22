@@ -1,7 +1,9 @@
 import { Game } from '@/game'
-import { IComponent } from '@/utils'
-import { Grid } from '@/grid'
-import { Fleet } from '@/fleet'
+import { ClickComponent, IComponent, Vector2D } from '@/utils'
+import { Grid, mockGridFactory } from '@/grid'
+import { Fleet, mockFleetFactory } from '@/fleet'
+import { CanvasLayer } from '@/canvas-layer'
+import { Team } from '@/team'
 
 class C1 implements IComponent {
   public Entity: Game
@@ -26,11 +28,11 @@ describe('>>> Game', () => {
   const c2 = new C2()
   const c3 = new C3()
 
+  const grid = mockGridFactory()
   beforeEach(() => {
-    game = new Game()
+    game = new Game(grid, mockFleetFactory(Team.A, grid), mockFleetFactory(Team.B, grid))
     window.requestAnimationFrame = jest.fn().mockImplementationOnce((cb) => cb())
   })
-
 
   it('should start update loop next frame after awake', () => {
     const spy = jest.spyOn(game, 'Update')
@@ -98,5 +100,20 @@ describe('>>> Game', () => {
     game.Update()
     expect(spyGridUpdate).toBeCalled()
     expect(spyFleetUpdate).toBeCalled()
+  })
+
+  it('should handle click', () => {
+    const point= new Vector2D(200, 200)
+
+    game.Awake()
+    CanvasLayer.Background.GetLocalPointOf = jest.fn().mockReturnValueOnce(point)
+
+    const spy = jest.spyOn(grid.GetComponent(ClickComponent), 'ClickOn')
+
+    expect(spy).not.toBeCalled()
+
+    document.body.dispatchEvent(new MouseEvent('click'))
+
+    expect(spy).toBeCalledWith(point)
   })
 })
