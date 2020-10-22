@@ -14,9 +14,9 @@ export class Game extends Entity {
   }
 
   public Awake(): void {
-    super.Awake()
-
     this.AddComponent(new GameInputComponent())
+
+    super.Awake()
 
     // instantiate and Grid to the list of children
     const grid = new Grid()
