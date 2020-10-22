@@ -2,6 +2,9 @@ import { Entity, Vector2D } from '@/utils'
 import { NodeDrawComponent } from './components'
 
 export class Node extends Entity {
+  /**
+   * @todo replace temp property with real functionality
+   */
   public IsActive = false
 
   public get Size(): Vector2D {
