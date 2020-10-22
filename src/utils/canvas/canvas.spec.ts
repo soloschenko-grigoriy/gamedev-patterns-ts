@@ -78,5 +78,26 @@ describe('>>> Canvas', () => {
 
       expect(canvas.Element.style.zIndex).toBe<string>(zIndex)
     })
+
+    describe('>>> calculate local point by global', () => {
+      beforeEach(() => {
+        canvas.Element.getBoundingClientRect = jest.fn().mockReturnValue({
+          top: 20,
+          left: 20,
+          width: 500,
+          height: 500
+        })
+      })
+
+      it('should return null if point is out of canvas boundaries', () => {
+        expect(canvas.CalcLocalPointFrom(new Vector2D(0, 0))).toBeNull()
+        expect(canvas.CalcLocalPointFrom(new Vector2D(541, 400))).toBeNull()
+        expect(canvas.CalcLocalPointFrom(new Vector2D(400, 541))).toBeNull()
+      })
+
+      it('should return local point otherwise', () => {
+        expect(canvas.CalcLocalPointFrom(new Vector2D(200, 300))).toEqual(new Vector2D(180, 280))
+      })
+    })
   })
 })
