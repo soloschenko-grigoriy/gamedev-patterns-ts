@@ -1,18 +1,18 @@
 import { CanvasLayer } from '@/canvas-layer'
 import { Game, mockGameFactory } from '@/game'
 import { Grid, mockGridFactory } from '@/grid'
-import { ClickComponent, Vector2D } from '@/utils'
-import { GameClickComponent } from './click'
+import { OnclickComponent, Vector2D } from '@/utils'
+import { GameInputComponent } from './input'
 
-describe('>>> Game', () => {
-  let comp: GameClickComponent
+describe('>>> Game Input Component', () => {
+  let comp: GameInputComponent
   let grid: Grid
   let game: Game
 
   beforeEach(() => {
     grid = mockGridFactory()
     game = mockGameFactory(grid)
-    comp = new GameClickComponent()
+    comp = new GameInputComponent()
 
     game.AddComponent(comp)
   })
@@ -23,7 +23,7 @@ describe('>>> Game', () => {
     game.Awake()
     CanvasLayer.Background.GetLocalPointOf = jest.fn().mockReturnValueOnce(point)
 
-    const spy = jest.spyOn(grid.GetComponent(ClickComponent), 'ClickOn')
+    const spy = jest.spyOn(grid.GetComponent(OnclickComponent), 'ClickOn')
 
     expect(spy).not.toBeCalled()
 

@@ -1,5 +1,5 @@
 export * from './canvas'
-export * from './click'
+export * from './onclick'
 export * from './color'
 export * from './ecs'
 export * from './lifecycle'

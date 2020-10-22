@@ -2,7 +2,7 @@ import { Game } from '@/game'
 import { Grid } from '@/grid'
 import { Fleet } from '@/fleet'
 import { mockGameFactory } from './game.mock'
-import { GameClickComponent } from './components'
+import { GameInputComponent } from './components'
 
 describe('>>> Game', () => {
   let game: Game
@@ -19,8 +19,8 @@ describe('>>> Game', () => {
   })
 
   it('should awake and update all Components', () => {
-    const spyAwakeGameClickComp = jest.spyOn(GameClickComponent.prototype, 'Awake')
-    const spyUpdateGameClickComp = jest.spyOn(GameClickComponent.prototype, 'Update')
+    const spyAwakeGameClickComp = jest.spyOn(GameInputComponent.prototype, 'Awake')
+    const spyUpdateGameClickComp = jest.spyOn(GameInputComponent.prototype, 'Update')
 
     expect(spyAwakeGameClickComp).not.toBeCalled()
     expect(spyUpdateGameClickComp).not.toBeCalled()

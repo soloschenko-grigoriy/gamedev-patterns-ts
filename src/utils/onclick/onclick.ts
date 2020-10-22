@@ -1,6 +1,6 @@
 import { Entity, IComponent, Vector2D } from '@/utils'
 
-export abstract class ClickComponent implements IComponent {
+export abstract class OnclickComponent implements IComponent {
   public Entity: Entity | null
 
   public abstract Awake(): void

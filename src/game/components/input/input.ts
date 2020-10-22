@@ -1,9 +1,9 @@
 import { CanvasLayer } from '@/canvas-layer'
 import { Game } from '@/game'
-import { ClickComponent, IComponent, Vector2D } from '@/utils'
+import { OnclickComponent, IComponent, Vector2D } from '@/utils'
 
-export class GameClickComponent implements IComponent {
-  Entity: Game
+export class GameInputComponent implements IComponent {
+  public Entity: Game
 
   public Awake(): void {
     document.body.addEventListener('click', this.HandleClick.bind(this))
@@ -20,11 +20,11 @@ export class GameClickComponent implements IComponent {
     }
 
     for (const entity of this.Entity.Entities) {
-      if (!entity.HasComponent(ClickComponent)) {
+      if (!entity.HasComponent(OnclickComponent)) {
         continue
       }
 
-      entity.GetComponent(ClickComponent).ClickOn(point)
+      entity.GetComponent(OnclickComponent).ClickOn(point)
     }
   }
 }
