@@ -1,7 +1,6 @@
 import { Entity } from '@/utils'
 import { Grid } from '@/grid'
 import { Fleet } from '@/fleet'
-import { Team } from '@/team'
 import { GameInputComponent } from './components'
 
 export class Game extends Entity {
@@ -13,18 +12,16 @@ export class Game extends Entity {
     return this._entities
   }
 
+  constructor(grid: Grid, fleetA: Fleet, fleetB: Fleet) {
+    super()
+
+    this._entities.push(grid, fleetA, fleetB)
+  }
+
   public Awake(): void {
     this.AddComponent(new GameInputComponent())
 
     super.Awake()
-
-    // instantiate and Grid to the list of children
-    const grid = new Grid()
-    this._entities.push(
-      grid,
-      new Fleet(Team.A, grid),
-      new Fleet(Team.B, grid),
-    )
 
     // awake all children
     for (const entity of this.Entities) {
