@@ -1,9 +1,9 @@
-import { Entity, Vector2D } from '@/utils'
+import { BreadthFirstSearch, Entity, IGraph, Vector2D } from '@/utils'
 import { Node } from '@/node'
 import { Settings } from '@/settings'
 import { GridOnclickComponent } from './components'
 
-export class Grid extends Entity {
+export class Grid extends Entity implements IGraph {
   private _nodes: Node[] = []
 
   public get Nodes(): Node[] {
@@ -12,7 +12,7 @@ export class Grid extends Entity {
 
   public Awake(): void {
     this.AddComponent(new GridOnclickComponent())
-    
+
     // awake components
     super.Awake()
 
@@ -35,6 +35,26 @@ export class Grid extends Entity {
     }
   }
 
+  public GetNodeByIndex(index: Vector2D): Node | undefined {
+    return this.Nodes.find(node => node.Index.x === index.x && node.Index.y === index.y)
+  }
+
+  public GetNeighborsForNodeWithIndex(index: Vector2D): Vector2D[] {
+    const node = this.GetNodeByIndex(index)
+    if (!node) {
+      throw new Error(`Node with index ${index.AsString()} does not exist`)
+    }
+
+    const nodes = []
+    for (const neighbor of node.Neighbors) {
+      if (!neighbor.Ship || neighbor.Ship.IsActive) {
+        nodes.push(neighbor.Index)
+      }
+    }
+
+    return nodes
+  }
+
   private InitNodes(): void {
     const size = Settings.grid.nodeSize
     const offset = Settings.grid.nodeOffset
@@ -52,8 +72,49 @@ export class Grid extends Entity {
 
         const index = new Vector2D(x, y)
 
-        const node = new Node(start, end, index)
+        const top = this.Nodes.find(node => node.Index.x === index.x && node.Index.y === index.y - 1)
+        const left = this.Nodes.find(node => node.Index.x === index.x - 1 && node.Index.y === index.y)
+
+        const neighbors: Node[] = []
+        const node = new Node(start, end, index, neighbors)
+
+        if (left) {
+          neighbors.push(left)
+          left.Neighbors.push(node)
+        }
+
+        if (top) {
+          neighbors.push(top)
+          top.Neighbors.push(node)
+        }
+
         this._nodes.push(node)
+      }
+    }
+  }
+
+  public DeterminePathTo(node: Node): void {
+    const path = BreadthFirstSearch(this, node.Index)
+
+    for (const i in path) {
+      if (Object.prototype.hasOwnProperty.call(path, i)) {
+        const current = this.GetNodeByIndex(Vector2D.FromString(i))
+        if (!current) {
+          throw new Error(`Node with the index ${i} not found`)
+        }
+
+        const v = path[i]
+        if (!v) {
+          current.Next = null
+          continue
+        }
+
+        const next = this.GetNodeByIndex(v)
+        if (!next) {
+          throw new Error(`Node with the index ${v} not found`)
+        }
+
+        current.Next = next
       }
     }
   }
