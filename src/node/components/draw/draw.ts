@@ -47,5 +47,32 @@ export class NodeDrawComponent implements IComponent {
         new Color(255, 0, 0, 1)
       )
     }
+
+    if (entity.Next) {
+      const nextPosition = entity.Next.Index
+      const position = entity.Index
+      let text = ''
+      if (nextPosition.x === position.x) {
+        if (nextPosition.y > entity.Index.y) {
+          text = 'V'
+        } else {
+          text = '^'
+        }
+      } else if (nextPosition.y === entity.Index.y) {
+        if (nextPosition.x > entity.Index.x) {
+          text = '>'
+        } else {
+          text = '<'
+        }
+      } else {
+        throw new Error('Next is wrong')
+      }
+
+      CanvasLayer.Background.DrawText(
+        text,
+        new Vector2D(entity.Start.x + entity.Size.x / 2, entity.Start.y + entity.Size.y / 2),
+        new Color(255, 0, 0, 1)
+      )
+    }
   }
 }

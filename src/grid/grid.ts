@@ -1,9 +1,9 @@
-import { Entity, Vector2D } from '@/utils'
+import { BreadthFirstSearch, Entity, IGraph, Vector2D } from '@/utils'
 import { Node } from '@/node'
 import { Settings } from '@/settings'
 import { GridOnclickComponent } from './components'
 
-export class Grid extends Entity {
+export class Grid extends Entity implements IGraph {
   private _nodes: Node[] = []
 
   public get Nodes(): Node[] {
@@ -32,6 +32,52 @@ export class Grid extends Entity {
     // update children
     for (const node of this._nodes) {
       node.Update(deltaTime)
+    }
+  }
+
+  public GetNodeByIndex(index: Vector2D): Node | undefined {
+    return this.Nodes.find(node => node.Index.x === index.x && node.Index.y === index.y)
+  }
+
+  public GetNeighborsForNodeWithIndex(index: Vector2D): Vector2D[] {
+    const node = this.GetNodeByIndex(index)
+    if (!node) {
+      throw new Error(`Node with index ${index.AsString()} does not exist`)
+    }
+
+    const nodes = []
+    for (const neighbor of node.Neighbors) {
+      if (!neighbor.Ship || neighbor.Ship.IsActive) {
+        nodes.push(neighbor.Index)
+      }
+    }
+
+    return nodes
+  }
+
+  public DeterminePathTo(node: Node): void {
+    const path = BreadthFirstSearch(this, node.Index)
+
+    for (const i in path) {
+      if (Object.prototype.hasOwnProperty.call(path, i)) {
+        const current = this.GetNodeByIndex(Vector2D.FromString(i))
+        if (!current) {
+          throw new Error(`Node with the index ${i} not found`)
+        }
+
+        const v = path[i]
+        if (!v) {
+          current.Next = null
+          continue
+        }
+
+        const next = this.GetNodeByIndex(v)
+        if (!next) {
+          throw new Error(`Node with the index ${v} not found`)
+        }
+
+        current.Next = next
+      }
     }
   }
 

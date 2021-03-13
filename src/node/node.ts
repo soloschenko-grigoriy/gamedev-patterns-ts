@@ -9,6 +9,7 @@ export class Node extends Entity {
   public IsActive = false
   public Ship: Ship | null = null
   public IsInLocomotionRange = false
+  public Next: Node | null = null;
 
   public get Size(): Vector2D {
     return new Vector2D(
