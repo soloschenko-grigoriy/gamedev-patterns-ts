@@ -6,6 +6,7 @@ export class ShipLocomotionComponent implements IComponent {
   public Entity: Ship
 
   private _node: Node
+  private _previousPosition: Vector2D | null = null
 
   public get Node(): Node {
     return this._node
@@ -20,15 +21,23 @@ export class ShipLocomotionComponent implements IComponent {
     return this.Node.Center
   }
 
+  public get PreviousPosition(): Vector2D | null {
+    return this._previousPosition
+  }
+
   constructor(node: Node) {
     this.Node = node
   }
 
   public Awake(): void {
     this._node.Ship = this.Entity
+    this._previousPosition = null
   }
 
   public Update(deltaTime: number): void {
-    /* @todo */
+    if (this.Entity.IsActive && this._node.Next) {
+      this._previousPosition = this._node.Center
+      this._node = this._node.Next
+    }
   }
 }

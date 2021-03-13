@@ -1,11 +1,9 @@
 import { Entity, Vector2D } from '@/utils'
 import { Fleet } from '@/fleet'
 import { ShipDrawComponent, ShipLocomotionComponent } from './components'
-import { Node } from '@/node'
 import { Settings } from '@/settings'
 
 export class Ship extends Entity {
-  private readonly _locomotionComponent: ShipLocomotionComponent
   private _isActive = false;
 
   public get IsActive(): boolean {
@@ -24,15 +22,21 @@ export class Ship extends Entity {
     return this._locomotionComponent.Position
   }
 
-  constructor(public readonly Factory: Fleet, node: Node) {
-    super()
+  public get PreviousPosition(): Vector2D | null {
+    return this._locomotionComponent.PreviousPosition
+  }
 
-    this._locomotionComponent = new ShipLocomotionComponent(node)
+  constructor(
+    public readonly Factory: Fleet,
+    private readonly _locomotionComponent: ShipLocomotionComponent,
+    private readonly _drawComponent: ShipDrawComponent,
+  ) {
+    super()
   }
 
   public Awake(): void {
     this.AddComponent(this._locomotionComponent)
-    this.AddComponent(new ShipDrawComponent())
+    this.AddComponent(this._drawComponent)
 
     super.Awake()
   }
