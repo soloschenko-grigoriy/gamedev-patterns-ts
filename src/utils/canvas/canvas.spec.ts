@@ -79,6 +79,19 @@ describe('>>> Canvas', () => {
       expect(canvas.Element.style.zIndex).toBe<string>(zIndex)
     })
 
+    it('should draw the text', () => {
+      const text = 'text'
+      const position = new Vector2D(0, 0)
+      const color = new Color(255, 10, 20, 1)
+      const spy = jest.spyOn(canvas.Context, 'fillText')
+
+      expect(spy).not.toBeCalled()
+
+      canvas.DrawText(text, position, color)
+
+      expect(spy).toBeCalledWith(text, position.x, position.y)
+    })
+
     describe('>>> calculate local point by global', () => {
       beforeEach(() => {
         canvas.Element.getBoundingClientRect = jest.fn().mockReturnValue({
@@ -97,19 +110,6 @@ describe('>>> Canvas', () => {
 
       it('should return local point otherwise', () => {
         expect(canvas.CalcLocalPointFrom(new Vector2D(200, 300))).toEqual(new Vector2D(180, 280))
-      })
-
-      it('should draw the text', () => {
-        const text = 'text'
-        const position = new Vector2D(0, 0)
-        const color = new Color(255, 10, 20, 1)
-        const spy = jest.spyOn(canvas.Context, 'fillText')
-
-        expect(spy).not.toBeCalled()
-
-        canvas.DrawText(text, position, color)
-
-        expect(spy).toBeCalledWith(text, position.x, position.y)
       })
     })
   })
