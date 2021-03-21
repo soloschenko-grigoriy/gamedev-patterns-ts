@@ -11,11 +11,12 @@ export const Settings = Object.freeze({
     }
   },
   ships: {
-    fleetSize: 3,
+    fleetSize: 1,
     radius: 40,
     colors: {
       a: new Color(187, 222, 251, 1),
       b: new Color(255, 236, 179, 1)
     }
-  }
+  },
+  debugMode: true
 })
