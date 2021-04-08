@@ -26,7 +26,7 @@ export class ShipLocomotionComponent implements IComponent {
   }
 
   constructor(node: Node) {
-    this.Node = node
+    this._node = node
   }
 
   public Awake(): void {
