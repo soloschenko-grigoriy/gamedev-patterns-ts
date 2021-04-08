@@ -32,7 +32,7 @@ describe('>>> Node Draw Component', () => {
     expect(spyFillRect).toBeCalled()
   })
 
-  it('should render active color if entity is active and regular color otherwise', () => {
+  it('should render range color if entity is in range and regular color otherwise', () => {
     const spyFillRect = jest.spyOn(CanvasLayer.Background, 'FillRect')
 
     comp.Entity.IsInLocomotionRange = true
