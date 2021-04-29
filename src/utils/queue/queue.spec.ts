@@ -23,10 +23,11 @@ describe('>>> Queue', () => {
       q.Enqueue('three')
 
       expect(q.Dequeue()).toBe('one')
+      expect(q.Items).toStrictEqual(['two', 'three'])
     })
   })
 
-  describe('>> isEmpty', () => {
+  describe('>> IsEmpty', () => {
     it('should return true if queue is empty and false otherwise', () => {
       expect(q.Items.length).toBe(0)
       expect(q.IsEmpty).toBeTruthy()
