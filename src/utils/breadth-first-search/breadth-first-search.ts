@@ -16,7 +16,7 @@ export const BreadthFirstSearch = (graph: IGraph, start: Vector2D): Dictionary<V
         frontier.Enqueue(next)
         path[next.AsString()] = current
       }
-    } 
+    }
   }
 
   return path
