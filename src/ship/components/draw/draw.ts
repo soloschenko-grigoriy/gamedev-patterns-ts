@@ -33,12 +33,14 @@ export class ShipDrawComponent implements IComponent {
   }
 
   private Clear(): void {
-    CanvasLayer.Foreground.ClearRect(
-      new Vector2D(
-        this.Position.x - Settings.grid.nodeSize / 2,
-        this.Position.y - Settings.grid.nodeSize / 2
-      ),
-      new Vector2D(Settings.grid.nodeSize, Settings.grid.nodeSize)
-    )
+    if (this.Entity.PreviousPosition) {
+      CanvasLayer.Foreground.ClearRect(
+        new Vector2D(
+          this.Entity.PreviousPosition.x - Settings.grid.nodeSize / 2,
+          this.Entity.PreviousPosition.y - Settings.grid.nodeSize / 2
+        ),
+        new Vector2D(Settings.grid.nodeSize, Settings.grid.nodeSize)
+      )
+    }
   }
 }
