@@ -1,7 +1,7 @@
 import { Entity } from '@/utils'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Team } from '@/team'
-import { Ship, ShipDrawComponent, ShipLocomotionComponent } from '@/ship'
+import { Ship, ShipDrawComponent, ShipLocomotionAnimatedComponent } from '@/ship'
 import { Settings } from '@/settings'
 import { Grid } from '@/grid'
 
@@ -37,7 +37,7 @@ export class Fleet extends Entity {
       const node = this.Team == Team.A ? nodes[i * dimension] : nodes[nodes.length - 1 - i * dimension]
       const ship = new Ship(
         this,
-        new ShipLocomotionComponent(node),
+        new ShipLocomotionAnimatedComponent(node),
         new ShipDrawComponent()
       )
       this._ships.push(ship)

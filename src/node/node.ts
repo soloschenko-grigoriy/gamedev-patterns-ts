@@ -3,10 +3,6 @@ import { Entity, Vector2D } from '@/utils'
 import { NodeDrawComponent } from './components'
 
 export class Node extends Entity {
-  /**
-   * @todo replace temp property with real functionality
-   */
-  public IsActive = false
   public Ship: Ship | null = null
   public IsInLocomotionRange = false
   public Next: Node | null = null;
