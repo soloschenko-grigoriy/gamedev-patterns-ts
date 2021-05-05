@@ -1,7 +1,7 @@
 import { CanvasLayer } from '@/canvas-layer'
 import { mockFleetFactory } from '@/fleet'
- import { mockNodeFactory } from '@/node'
- import { Ship, ShipDrawComponent, mockShipFactory, ShipLocomotionComponent } from '@/ship'
+import { mockNodeFactory } from '@/node'
+import { Ship, ShipDrawComponent, mockShipFactory, ShipLocomotionComponent } from '@/ship'
 
 describe('>>> Node Ship Component', () => {
   const comp = new ShipDrawComponent()
