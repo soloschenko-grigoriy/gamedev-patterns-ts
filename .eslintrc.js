@@ -30,9 +30,16 @@ module.exports = {
                 allowHigherOrderFunctions: true,
             }
         ],
-        '@typescript-eslint/interface-name-prefix': [
-            'error',
-            'always'
+        '@typescript-eslint/naming-convention': [
+          'error',
+          {
+            'selector': 'interface',
+            'format': ['PascalCase'],
+            'custom': {
+              'regex': '^I[A-Z]',
+              'match': true
+            }
+          }
         ],
         'no-unused-vars': 'off', // note you must disable the base rule as it can report incorrect errors
         '@typescript-eslint/no-unused-vars': [
