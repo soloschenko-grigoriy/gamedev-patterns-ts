@@ -4,7 +4,7 @@ import { ShipDrawComponent, ShipLocomotionComponent } from './components'
 import { Settings } from '@/settings'
 
 export class Ship extends Entity {
-  private _isActive = false;
+  private _isActive = false
 
   public get IsActive(): boolean {
     return this._isActive
