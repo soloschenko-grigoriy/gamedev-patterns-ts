@@ -50,6 +50,7 @@ export class ShipLocomotionComponent implements IComponent {
     }
 
     this._previousPosition = this._node.Center
-    this._node = next
+    this.Node.Ship = null
+    this.Node = next
   }
 }

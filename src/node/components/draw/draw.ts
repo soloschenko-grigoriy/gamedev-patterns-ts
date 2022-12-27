@@ -58,6 +58,8 @@ export class NodeDrawComponent implements IComponent {
         new Vector2D(entity.Start.x + 40, entity.Start.y),
         new Color(255, 0, 0, 1)
       )
+    } else {
+      CanvasLayer.Background.ClearRect(new Vector2D(entity.Start.x + 40, entity.Start.y - 10), new Vector2D(30, 10))
     }
   }
 }
