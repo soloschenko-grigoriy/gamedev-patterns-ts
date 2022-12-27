@@ -7,7 +7,6 @@ export class ShipLocomotionComponent implements IComponent {
 
   private _node: Node
   private _previousPosition: Vector2D | null = null
-
   private _path: Node[] = []
 
   public get Node(): Node {

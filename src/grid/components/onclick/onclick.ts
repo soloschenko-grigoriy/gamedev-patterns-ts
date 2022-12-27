@@ -15,7 +15,7 @@ export class GridOnclickComponent extends OnclickComponent {
   public ClickOn(point: Vector2D): void {
     for (const node of this.Entity.Nodes) {
       if (node.IsInLocomotionRange && node.Occupies(point)) {
-        this.Entity.DeterminePathTo(node)
+        this.Entity.CalcPathAndMoveActive(node)
       }
     }
   }
