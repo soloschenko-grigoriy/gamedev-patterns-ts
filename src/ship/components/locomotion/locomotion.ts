@@ -6,6 +6,9 @@ export class ShipLocomotionComponent implements IComponent {
   public Entity: Ship
 
   private _node: Node
+  private _previousPosition: Vector2D | null = null
+
+  private _path: Node[] = []
 
   public get Node(): Node {
     return this._node
@@ -20,6 +23,14 @@ export class ShipLocomotionComponent implements IComponent {
     return this.Node.Center
   }
 
+  public get PreviousPosition(): Vector2D | null {
+    return this._previousPosition
+  }
+
+  public set Path(v: Node[]) {
+    this._path = v
+  }
+
   constructor(node: Node) {
     this._node = node
   }
@@ -29,6 +40,17 @@ export class ShipLocomotionComponent implements IComponent {
   }
 
   public Update(deltaTime: number): void {
-    /* @todo */
+    if(!this.Entity.IsActive){
+      return
+    }
+
+    const next = this._path.shift()
+    if(!next){
+      this.Entity.OnMoveCompleted(this._node)
+      return
+    }
+
+    this._previousPosition = this._node.Center
+    this._node = next
   }
 }
