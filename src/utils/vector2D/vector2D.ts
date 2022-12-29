@@ -1,3 +1,5 @@
+import { Lerp } from '@/utils'
+
 export class Vector2D {
   constructor(public x: number, public y: number) { }
 
@@ -15,5 +17,9 @@ export class Vector2D {
 
   public AsString(): string {
     return `(${this.x},${this.y})`
+  }
+
+  public static Lerp(start: Vector2D, end: Vector2D, t: number): Vector2D {
+    return new Vector2D(Lerp(start.x, end.x, t), Lerp(start.y, end.y, t))
   }
 }

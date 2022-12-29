@@ -2,7 +2,7 @@ import {
   Ship,
   mockShipFactory,
   ShipDrawComponent,
-  ShipLocomotionComponent
+  ShipLocomotionAnimatedComponent
 } from '@/ship'
 
 describe('>>> Ship', () => {
@@ -16,8 +16,8 @@ describe('>>> Ship', () => {
     const spyDrawCompAwake = jest.spyOn(ShipDrawComponent.prototype, 'Awake')
     const spyDrawCompUpdate = jest.spyOn(ShipDrawComponent.prototype, 'Update')
 
-    const spyLocomotionCompAwake = jest.spyOn(ShipLocomotionComponent.prototype, 'Awake')
-    const spyLocomotionCompUpdate = jest.spyOn(ShipLocomotionComponent.prototype, 'Update')
+    const spyLocomotionCompAwake = jest.spyOn(ShipLocomotionAnimatedComponent.prototype, 'Awake')
+    const spyLocomotionCompUpdate = jest.spyOn(ShipLocomotionAnimatedComponent.prototype, 'Update')
 
     expect(spyDrawCompAwake).not.toBeCalled()
     expect(spyDrawCompUpdate).not.toBeCalled()
