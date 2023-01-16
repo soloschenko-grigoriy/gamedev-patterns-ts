@@ -9,6 +9,7 @@ export class Grid extends Entity implements IGraph {
   private _nodes: Node[] = []
   private _pathfinder = new Pathfinder(this, Grid.Heuristic)
   private _currentPath: Node[] = []
+  private _targetNode: Node | null = null
 
   public static Heuristic = (a: IGraphNode, b: IGraphNode): number => Math.abs(a.Position.x - b.Position.x) + Math.abs(a.Position.y - b.Position.y)
 
@@ -51,12 +52,21 @@ export class Grid extends Entity implements IGraph {
     return node.Neighbors
   }
 
-  public DeterminePathTo(node: Node): void {
+  public CalcPathAndMoveActive(node: Node): void {
     this._currentPath.forEach(item => item.IsOnPath = false)
 
     if(!this.ActiveShip){
       return
     }
+
+    if(node === this._targetNode){
+      this.UnHighlightAll()
+      this._targetNode = null
+      this.ActiveShip.Move(this._currentPath)
+      return
+    }
+
+    this._targetNode = node
 
     this._currentPath = this._pathfinder.CalculatePath(this.ActiveShip.Node, node) as Node[]
     this._currentPath.forEach(item => item.IsOnPath = true)
@@ -98,5 +108,12 @@ export class Grid extends Entity implements IGraph {
         this._nodes.push(node)
       }
     }
+  }
+
+  private UnHighlightAll(): void {
+    this._nodes.forEach(node => {
+      node.IsInLocomotionRange = false
+      node.IsOnPath = false
+    })
   }
 }

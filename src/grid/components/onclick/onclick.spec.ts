@@ -12,8 +12,10 @@ describe('>>> Grid Click Component', () => {
   })
 
   it('should update node if user click within it\'s range', () => {
-    const spy = jest.spyOn(comp.Entity, 'DeterminePathTo')
+    const spy = jest.spyOn(comp.Entity, 'CalcPathAndMoveActive')
 
+    comp.Entity.Nodes[0].IsInLocomotionRange = true
+    
     comp.ClickOn(new Vector2D(100, 100))
 
     expect(spy).toBeCalledWith(comp.Entity.Nodes[0])
