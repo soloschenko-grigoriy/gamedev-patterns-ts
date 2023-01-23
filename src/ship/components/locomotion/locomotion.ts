@@ -5,9 +5,9 @@ import { Node } from '@/node'
 export class ShipLocomotionComponent implements IComponent {
   public Entity: Ship
 
-  private _node: Node
-  private _path: Node[] = []
-  private _previousPosition: Vector2D | null = null
+  protected _node: Node
+  protected _path: Node[] = []
+  protected _previousPosition: Vector2D | null = null
 
   public get Node(): Node {
     return this._node

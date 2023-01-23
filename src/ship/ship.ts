@@ -1,6 +1,6 @@
 import { Entity, Vector2D } from '@/utils'
 import { Fleet } from '@/fleet'
-import { ShipDrawComponent, ShipLocomotionComponent } from './components'
+import { ShipDrawComponent, ShipLocomotionComponent, ShipLocomotionAnimatedComponent } from './components'
 import { Node } from '@/node'
 import { Settings } from '@/settings'
 
@@ -35,7 +35,7 @@ export class Ship extends Entity {
   constructor(public readonly Factory: Fleet, node: Node) {
     super()
 
-    this._locomotionComponent = new ShipLocomotionComponent(node)
+    this._locomotionComponent = new ShipLocomotionAnimatedComponent(node)
   }
 
   public Awake(): void {
