@@ -2,20 +2,37 @@ import { Entity } from '@/utils'
 import { Grid } from '@/grid'
 import { Fleet } from '@/fleet'
 import { GameInputComponent } from './components'
+import { GameStateMachina, GameStateOver, GameStateStart, GameStateTeamA, GameStateTeamB } from './state-machina'
 
 export class Game extends Entity {
   private _lastTimestamp = 0
 
   private _entities: Entity[] = []
 
+  private _currentFleet: Fleet | null = null
+
+  private readonly _stateMachina = new GameStateMachina(this)
+
   public get Entities(): Entity[] {
     return this._entities
   }
 
-  constructor(grid: Grid, fleetA: Fleet, fleetB: Fleet) {
+  public get CurrentFleet(): Fleet | null {
+    return this._currentFleet
+  }
+
+  public get FleetA(): Fleet {
+    return this._fleetA
+  }
+
+  public get FleetB(): Fleet {
+    return this._fleetB
+  }
+
+  constructor(grid: Grid, private readonly _fleetA: Fleet, private readonly _fleetB: Fleet) {
     super()
 
-    this._entities.push(grid, fleetA, fleetB)
+    this._entities.push(grid, _fleetA, _fleetB)
   }
 
   public Awake(): void {
@@ -28,6 +45,8 @@ export class Game extends Entity {
       entity.Awake()
     }
 
+    this.InitStateMachina()
+
     // Make sure Update starts after all entities are awaken
     window.requestAnimationFrame(() => {
       // set initial timestamp
@@ -36,6 +55,16 @@ export class Game extends Entity {
       // start update loop
       this.Update()
     })
+  }
+
+  public InitStateMachina() : void{
+    const stateStart = new GameStateStart(this._stateMachina)
+    const stateTeamA = new GameStateTeamA(this._stateMachina)
+    const stateTeamB = new GameStateTeamB(this._stateMachina)
+    const stateOver = new GameStateOver(this._stateMachina)
+
+    this._stateMachina.SetStates([stateStart, stateTeamA, stateTeamB, stateOver], stateStart)
+    this._stateMachina.Start()
   }
 
   public Update(): void {
@@ -48,6 +77,8 @@ export class Game extends Entity {
     for (const entity of this.Entities) {
       entity.Update(deltaTime)
     }
+
+    this._stateMachina.Update(deltaTime)
 
     // update the timestamp
     this._lastTimestamp = Date.now()

@@ -3,7 +3,7 @@ export interface IAction {
 }
 
 export interface ICondition {
-  Check(...args: unknown[]): boolean
+  Check(): boolean
 }
 
 export interface ITransition {

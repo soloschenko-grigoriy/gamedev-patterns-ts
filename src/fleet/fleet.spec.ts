@@ -2,6 +2,8 @@ import { Fleet, mockFleetFactory } from '@/fleet'
 import { IComponent } from '@/utils'
 import { Ship } from '@/ship'
 import { Settings } from '@/settings'
+import { Team } from '@/team'
+import { mockGridFactory } from '@/grid'
 
 jest.mock('@/ship')
 class C1 implements IComponent {
@@ -63,5 +65,50 @@ describe('>>> Fleet', () => {
 
     fleet.Update(0)
     expect(spyShipUpdate).toBeCalledTimes(Settings.ships.fleetSize)
+  })
+
+  it('should activate next Ship when requested', () => {
+    const grid = mockGridFactory()
+
+    fleet = mockFleetFactory(Team.A, grid, 3)
+    fleet.Awake()
+
+    expect(fleet.Ships.length).toBe(3)
+
+    // activates first Ship
+    fleet.Activate()
+
+    expect(fleet.Ships[0].IsActive).toBeTruthy()
+    expect(fleet.Ships[1].IsActive).toBeFalsy()
+    expect(fleet.Ships[2].IsActive).toBeFalsy()
+
+    expect(grid.ActiveShip).toBe(fleet.Ships[0])
+
+    // should activate second ship
+    fleet.Activate()
+
+    expect(fleet.Ships[0].IsActive).toBeFalsy()
+    expect(fleet.Ships[1].IsActive).toBeTruthy()
+    expect(fleet.Ships[2].IsActive).toBeFalsy()
+
+    expect(grid.ActiveShip).toBe(fleet.Ships[1])
+
+    // should activate third ship
+    fleet.Activate()
+
+    expect(fleet.Ships[0].IsActive).toBeFalsy()
+    expect(fleet.Ships[1].IsActive).toBeFalsy()
+    expect(fleet.Ships[2].IsActive).toBeTruthy()
+
+    expect(grid.ActiveShip).toBe(fleet.Ships[2])
+
+    // should now activate the first one again
+    fleet.Activate()
+
+    expect(fleet.Ships[0].IsActive).toBeTruthy()
+    expect(fleet.Ships[1].IsActive).toBeFalsy()
+    expect(fleet.Ships[2].IsActive).toBeFalsy()
+
+    expect(grid.ActiveShip).toBe(fleet.Ships[0])
   })
 })
