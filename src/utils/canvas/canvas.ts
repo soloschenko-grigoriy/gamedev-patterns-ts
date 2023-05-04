@@ -85,5 +85,17 @@ export class Canvas implements IAwake {
 
     return new Vector2D(x, y)
   }
+
+  public DrawText(
+    text: string,
+    position: Vector2D,
+    color: Color = new Color(255, 255, 255, 1),
+    fontSize = 14,
+    font = 'Arial'
+  ): void {
+    this._ctx.font = `${fontSize}px ${font}`
+    this._ctx.fillStyle = color.AsString()
+    this._ctx.fillText(text, position.x, position.y)
+  }
 }
 

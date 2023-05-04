@@ -4,26 +4,33 @@ import { Node } from '@/node'
 
 export class ShipLocomotionComponent implements IComponent {
   public Entity: Ship
+  protected _node: Node
+  protected _previousPosition: Vector2D | null = null
 
-  private _node: Node | null = null
-
-  public get Node(): Node | null {
+  public get Node(): Node {
     return this._node
   }
 
-  public set Node(v: Node | null) {
-    this._node = v
+  public get Position(): Vector2D | null {
+    return this.Node.Center
   }
 
-  public get Position(): Vector2D | null {
-    return this.Node ? this.Node.Center : null
+  public get PreviousPosition(): Vector2D | null {
+    return this._previousPosition
+  }
+
+  constructor(node: Node) {
+    this._node = node
   }
 
   public Awake(): void {
-    /* @todo */
+    this._previousPosition = null
   }
 
   public Update(deltaTime: number): void {
-    /* @todo */
+    if (this.Entity.IsActive && this._node.Next) {
+      this._previousPosition = this._node.Center
+      this._node = this._node.Next
+    }
   }
 }
