@@ -7,10 +7,16 @@ import { Grid } from '@/grid'
 
 export class Fleet extends Entity {
   private _ships: Ship[] = []
+  private _activeShip: Ship | null
+
+  public get Ships(): Ship[] {
+    return [...this._ships]
+  }
 
   constructor(
     public readonly Team: Team,
-    private readonly _grid: Grid
+    private readonly _grid: Grid,
+    private readonly _size: number
   ) {
     super()
   }
@@ -28,23 +34,42 @@ export class Fleet extends Entity {
     this._ships.map(ship => ship.Update(deltaTime))
   }
 
+  public Activate(): void {
+    const nextShip = this._ships[this.FindIndexOfNextShip()]
+
+    if(this._activeShip){
+      this._activeShip.IsActive = false
+    }
+
+    this._activeShip = nextShip
+    this._activeShip.IsActive = true
+    this._grid.ActiveShip = this._activeShip
+  }
+
   private PrepareShips(): void {
     const dimension = Settings.grid.dimension
-    const fleetSize = Settings.ships.fleetSize
     const nodes = this._grid.Nodes
 
-    for (let i = 0; i < fleetSize; i++) {
+    for (let i = 0; i < this._size; i++) {
       const node = this.Team == Team.A ? nodes[i * dimension] : nodes[nodes.length - 1 - i * dimension]
       const ship = new Ship(this, node)
       this._ships.push(ship)
       ship.Awake()
     }
+  }
 
-    // @todo start with state machine
-    if (this.Team === Team.A) {
-      const activeShip = this._ships[0]
-      activeShip.IsActive = true
-      this._grid.ActiveShip = activeShip
+  private FindIndexOfNextShip(): number {
+    if(!this._activeShip){
+      return 0
     }
+
+    const currentIndex = this._ships.indexOf(this._activeShip)
+    const index = currentIndex + 1
+
+    if(index >= this._ships.length){
+      return 0
+    }
+
+    return index
   }
 }
