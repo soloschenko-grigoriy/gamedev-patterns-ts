@@ -3,6 +3,7 @@ import { IComponent } from '@/utils'
 import { Ship } from '@/ship'
 import { Settings } from '@/settings'
 
+jest.mock('@/ship')
 class C1 implements IComponent {
   public Entity: Fleet
   public Awake(): void { /*...*/ }
