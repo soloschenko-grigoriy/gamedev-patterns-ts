@@ -20,8 +20,20 @@ export class NodeDrawComponent implements IComponent {
     CanvasLayer.Background.FillRect(
       this.Entity.Start,
       this.Entity.Size,
-      this.Entity.IsInLocomotionRange ? Settings.grid.color.inLocomotionRange : Settings.grid.color.regular
+      this.GetColor()
     )
+  }
+
+  private GetColor(): Color {
+    if(this.Entity.IsOnPath){
+      return Settings.grid.color.onPath
+    }
+
+    if(this.Entity.IsInLocomotionRange){
+      return Settings.grid.color.inLocomotionRange
+    }
+
+    return Settings.grid.color.regular
   }
 
   private Clear(): void {

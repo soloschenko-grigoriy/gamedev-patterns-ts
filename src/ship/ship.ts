@@ -20,6 +20,10 @@ export class Ship extends Entity {
     }
   }
 
+  public get Node(): Node {
+    return this._locomotionComponent.Node
+  }
+  
   public get Position(): Vector2D | null {
     return this._locomotionComponent.Position
   }

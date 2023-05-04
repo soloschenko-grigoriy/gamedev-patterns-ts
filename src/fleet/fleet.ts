@@ -42,7 +42,9 @@ export class Fleet extends Entity {
 
     // @todo start with state machine
     if (this.Team === Team.A) {
-      this._ships[0].IsActive = true
+      const activeShip = this._ships[0]
+      activeShip.IsActive = true
+      this._grid.ActiveShip = activeShip
     }
   }
 }
