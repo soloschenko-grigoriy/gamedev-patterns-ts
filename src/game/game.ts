@@ -1,7 +1,7 @@
 import { Entity } from '@/utils'
 import { Grid } from '@/grid'
 import { Fleet } from '@/fleet'
-import { GameInputComponent } from './components'
+import { GameInputComponent, StartGameUI } from './components'
 import { GameStateMachina, GameStateOver, GameStateStart, GameStateTeamA, GameStateTeamB } from './state-machina'
 
 export class Game extends Entity {
@@ -37,6 +37,7 @@ export class Game extends Entity {
 
   public Awake(): void {
     this.AddComponent(new GameInputComponent())
+    this.AddComponent(new StartGameUI(document.body))
 
     super.Awake()
 
@@ -57,7 +58,7 @@ export class Game extends Entity {
     })
   }
 
-  public InitStateMachina() : void{
+  public InitStateMachina() : void {
     const stateStart = new GameStateStart(this._stateMachina)
     const stateTeamA = new GameStateTeamA(this._stateMachina)
     const stateTeamB = new GameStateTeamB(this._stateMachina)
