@@ -12,7 +12,7 @@ export class Grid extends Entity {
 
   public Awake(): void {
     this.AddComponent(new GridOnclickComponent())
-    
+
     // awake components
     super.Awake()
 
@@ -52,7 +52,22 @@ export class Grid extends Entity {
 
         const index = new Vector2D(x, y)
 
-        const node = new Node(start, end, index)
+        const top = this.Nodes.find(node => node.Index.x === index.x && node.Index.y === index.y - 1)
+        const left = this.Nodes.find(node => node.Index.x === index.x - 1 && node.Index.y === index.y)
+
+        const neighbors: Node[] = []
+        const node = new Node(start, end, index, neighbors)
+
+        if (left) {
+          neighbors.push(left)
+          left.Neighbors.push(node)
+        }
+
+        if (top) {
+          neighbors.push(top)
+          top.Neighbors.push(node)
+        }
+
         this._nodes.push(node)
       }
     }
